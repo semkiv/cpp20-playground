@@ -4,8 +4,22 @@ project(cpp20-playground)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+
+set(MSVC_DEBUG_FLAGS "/Od /Zi")
+set(CLANG_GCC_DEBUG_FLAGS "-O0 -g")
+set(MSVC_RELEASE_FLAGS "/O2 /GL /Gw /Gy /D NDEBUG")
+set(CLANG_GCC_RELEASE_FLAGS "-O3 -flto -DNDEBUG")
+
+set(
+    MSVC_FLAGS
+    "/utf-8"
+    "/EHsc"
+    "/MP"
+    "/WX"
+    "/W4"
+    "/analyze"
+    # "/fsanitize=address" # breaks incremental builds
+)
 
 set(
     CLANG_FLAGS
@@ -36,11 +50,20 @@ set(
     "-Wduplicated-cond"
     "-Wlogical-op"
     "-Wcast-align=strict"
+    # "-fanalyzer" # requires GCC 10
 )
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(CMAKE_CXX_FLAGS_DEBUG "${MSVC_DEBUG_FLAGS}")
+    set(CMAKE_CXX_FLAGS_RELEASE "${MSVC_RELEASE_FLAGS}")
+    add_compile_options("${MSVC_FLAGS}")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CLANG_GCC_DEBUG_FLAGS}")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CLANG_GCC_RELEASE_FLAGS}")
     add_compile_options("${CLANG_FLAGS}")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CLANG_GCC_DEBUG_FLAGS}")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CLANG_GCC_RELEASE_FLAGS}")
     add_compile_options("${GCC_FLAGS}")
 endif()
 

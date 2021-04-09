@@ -4,10 +4,13 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <thread>
 
-int main([[maybe_unused]] int const argc, [[maybe_unused]] char const * const argv[])
+auto main([[maybe_unused]] int const argc, [[maybe_unused]] char const * const argv[]) -> int
 {
-    std::cout << "Hello C++20 world!" << std::endl;
+    auto jt = std::jthread{
+        [] { std::cout << "Hello C++20 world!" << std::endl; }
+    };
 
     return EXIT_SUCCESS;
 }

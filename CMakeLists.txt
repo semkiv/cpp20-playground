@@ -2,14 +2,19 @@ cmake_minimum_required(VERSION 3.10.0)
 
 project(cpp20-playground)
 
+# General settings
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Debug optimization options
 set(MSVC_DEBUG_FLAGS "/Od /Zi")
 set(CLANG_GCC_DEBUG_FLAGS "-O0 -g")
+
+# Release optimization options
 set(MSVC_RELEASE_FLAGS "/O2 /GL /Gw /Gy /D NDEBUG")
 set(CLANG_GCC_RELEASE_FLAGS "-O3 -flto -DNDEBUG")
 
+# Microsoft Visual C++ compilation options
 set(
     MSVC_FLAGS
     "/utf-8"
@@ -21,6 +26,7 @@ set(
     # "/fsanitize=address" # breaks incremental builds
 )
 
+# Clang compilation options
 set(
     CLANG_FLAGS
     "-pedantic-errors"
@@ -43,6 +49,7 @@ set(
     "-Wredundant-decls"
 )
 
+# GCC compilation options
 set(
     GCC_FLAGS
     "${CLANG_FLAGS}"
@@ -66,5 +73,9 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS_RELEASE "${CLANG_GCC_RELEASE_FLAGS}")
     add_compile_options("${GCC_FLAGS}")
 endif()
+
+if (UNIX)
+    add_link_options("-lpthread")
+endif (UNIX)
 
 add_executable(cpp20-playground src/main.cpp)

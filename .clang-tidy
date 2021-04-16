@@ -8,7 +8,10 @@ Checks: >-
     modernize-*,
     performance-*,
     portability-*,
-    readability-*
+    readability-*,
+CheckOptions:
+    - key: readability-uppercase-literal-suffix.NewSuffixes
+      value: 'L;LL;LU;LLU'
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 FormatStyle: file

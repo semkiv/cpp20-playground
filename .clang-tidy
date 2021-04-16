@@ -12,7 +12,7 @@ Checks: >-
 CheckOptions:
     - key: readability-uppercase-literal-suffix.NewSuffixes
       value: 'L;LL;LU;LLU'
-WarningsAsErrors: ''
+WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
 FormatStyle: file
 User: semkiv

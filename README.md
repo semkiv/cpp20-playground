@@ -23,4 +23,4 @@ With Clang 12.0.0 on Fedora 34 this fails because the headers "cannot be importe
 
 ## MSVC
 
-This one is difficult. Microsoft is being themselves and use different syntax for importing modules (`import std.core;`).
+This one is difficult. Microsoft are being themselves and use different syntax for importing modules (`import std.core;`).
